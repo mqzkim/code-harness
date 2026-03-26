@@ -1,0 +1,16 @@
+{
+  "name": "code-harness",
+  "version": "1.0.0",
+  "description": "Centralized structural code quality governance — evaluate, evolve, verify",
+  "type": "module",
+  "bin": {
+    "code-harness": "./bin/cli.js"
+  },
+  "scripts": {
+    "evaluate": "node bin/cli.js evaluate",
+    "evolve": "node bin/cli.js evolve",
+    "run-all": "node bin/run-all.js",
+    "test": "node --test tests/scorer.test.js tests/scanner.test.js"
+  },
+  "license": "MIT"
+}

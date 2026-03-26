@@ -1,0 +1,177 @@
+{
+  "version": "1.0.0",
+  "maxScore": 100,
+  "passingThreshold": 80,
+  "categories": [
+    {
+      "id": "domain-clarity",
+      "name": "Domain Clarity & Intent Readability",
+      "weight": 25,
+      "rules": [
+        {
+          "id": "SC-01",
+          "name": "Function/variable names convey intent without comments",
+          "maxPoints": 8,
+          "type": "claude",
+          "fix": "Rename functions/variables to clearly describe their purpose. Replace generic names (data, result, handle) with domain-specific names."
+        },
+        {
+          "id": "SC-02",
+          "name": "Module boundaries align with domain concepts",
+          "maxPoints": 8,
+          "type": "claude",
+          "fix": "Split modules that mix concerns. Each file should map to one domain concept."
+        },
+        {
+          "id": "SC-03",
+          "name": "Control flow is linear and predictable (max nesting <= 3)",
+          "maxPoints": 5,
+          "type": "auto",
+          "metric": "max_nesting_depth",
+          "target": 3,
+          "fix": "Extract nested blocks into helper functions. Use early returns instead of nested if/else."
+        },
+        {
+          "id": "SC-04",
+          "name": "Abstraction levels are consistent within modules",
+          "maxPoints": 4,
+          "type": "claude",
+          "fix": "Move low-level operations into utility functions. Keep orchestration and implementation at separate levels."
+        }
+      ]
+    },
+    {
+      "id": "structural-maintainability",
+      "name": "Structural Maintainability",
+      "weight": 25,
+      "rules": [
+        {
+          "id": "SM-01",
+          "name": "Dependency direction is acyclic (no circular imports)",
+          "maxPoints": 7,
+          "type": "auto",
+          "metric": "circular_imports",
+          "target": 0,
+          "fix": "Break circular dependencies by extracting shared types/interfaces into a separate module."
+        },
+        {
+          "id": "SM-02",
+          "name": "Each module has a single clear responsibility",
+          "maxPoints": 6,
+          "type": "claude",
+          "fix": "Split multi-responsibility modules. One file = one reason to change."
+        },
+        {
+          "id": "SM-03",
+          "name": "Configuration is separated from logic",
+          "maxPoints": 6,
+          "type": "auto",
+          "metric": "config_separation",
+          "fix": "Move hardcoded URLs, magic numbers, and constants into config files or environment variables."
+        },
+        {
+          "id": "SM-04",
+          "name": "Common patterns are extracted, not duplicated",
+          "maxPoints": 6,
+          "type": "claude",
+          "fix": "Extract repeated code blocks (>3 lines) into shared utility functions."
+        }
+      ]
+    },
+    {
+      "id": "bug-resistance",
+      "name": "Bug Resistance Patterns",
+      "weight": 20,
+      "rules": [
+        {
+          "id": "BR-01",
+          "name": "All async paths have error handling",
+          "maxPoints": 6,
+          "type": "auto",
+          "metric": "async_error_coverage",
+          "target": 1.0,
+          "fix": "Add try/catch blocks to all async functions. Add .catch() to promise chains."
+        },
+        {
+          "id": "BR-02",
+          "name": "Input boundaries are validated at module edges",
+          "maxPoints": 5,
+          "type": "claude",
+          "fix": "Add input validation to all public functions that accept external data."
+        },
+        {
+          "id": "BR-03",
+          "name": "Mutable state is minimized (let/total ratio < 10%)",
+          "maxPoints": 5,
+          "type": "auto",
+          "metric": "let_const_ratio",
+          "target": 0.1,
+          "fix": "Replace let with const where possible. Restructure code to avoid reassignment."
+        },
+        {
+          "id": "BR-04",
+          "name": "Edge cases handled (null, empty, overflow)",
+          "maxPoints": 4,
+          "type": "claude",
+          "fix": "Add guard clauses for null/undefined. Use optional chaining and default parameters."
+        }
+      ]
+    },
+    {
+      "id": "api-design",
+      "name": "API Design Quality",
+      "weight": 15,
+      "rules": [
+        {
+          "id": "AD-01",
+          "name": "Public APIs are minimal and well-bounded",
+          "maxPoints": 5,
+          "type": "claude",
+          "fix": "Remove unnecessary exports. Use index.js as clean public API surface."
+        },
+        {
+          "id": "AD-02",
+          "name": "Return types are consistent and predictable",
+          "maxPoints": 5,
+          "type": "claude",
+          "fix": "Standardize return shapes across similar functions."
+        },
+        {
+          "id": "AD-03",
+          "name": "Error responses follow a uniform schema",
+          "maxPoints": 5,
+          "type": "claude",
+          "fix": "Unify error format: { error: { message, code, status } } across all modules."
+        }
+      ]
+    },
+    {
+      "id": "evolutionary-fitness",
+      "name": "Evolutionary Fitness",
+      "weight": 15,
+      "rules": [
+        {
+          "id": "EF-01",
+          "name": "Adding a new component requires minimal file changes",
+          "maxPoints": 5,
+          "type": "claude",
+          "fix": "Ensure plugin/adapter patterns so new features require only new files + config registration."
+        },
+        {
+          "id": "EF-02",
+          "name": "Adding a new route/endpoint requires only route + registration",
+          "maxPoints": 5,
+          "type": "claude",
+          "fix": "Middleware/pipeline should apply automatically. Only route file + registration needed."
+        },
+        {
+          "id": "EF-03",
+          "name": "Data schema changes don't cascade across modules",
+          "maxPoints": 5,
+          "type": "claude",
+          "fix": "Decouple data consumers. Each module should parse only what it needs."
+        }
+      ]
+    }
+  ]
+}
