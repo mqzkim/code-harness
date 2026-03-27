@@ -10,7 +10,9 @@
     "evaluate": "node bin/cli.js evaluate",
     "evolve": "node bin/cli.js evolve",
     "run-all": "node bin/run-all.js",
-    "test": "node --test tests/scorer.test.js tests/scanner.test.js"
+    "test": "node --test tests/scorer.test.js tests/scanner.test.js",
+    "cron:validate": "node scripts/validate-cron-rules.mjs",
+    "cron:status": "node scripts/cron-status-report.mjs"
   },
   "license": "MIT"
 }

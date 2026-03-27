@@ -1,0 +1,64 @@
+{
+  "version": "1",
+  "updated": "2026-03-27",
+  "description": "Central cron rule registry for mqzkim/* repositories. Edit this file to enable/disable/pause any scheduled workflow.",
+
+  "defaults": {
+    "enabled": true,
+    "skipOnWeekend": false,
+    "failOpen": true
+  },
+
+  "jobs": {
+    "claude-workspace/self-evolution": {
+      "enabled": true,
+      "paused": false,
+      "pauseReason": "",
+      "schedule": "30 2 * * *",
+      "description": "Daily self-evolution evaluation — Shipkit codebase (02:30 UTC / 11:30 KST)",
+      "repo": "mqzkim/claude-workspace",
+      "workflowFile": ".github/workflows/self-evolution.yml",
+      "rules": {
+        "skipOnWeekend": false,
+        "skipDates": [],
+        "onlyOnDays": null,
+        "activeFrom": null,
+        "activeUntil": null
+      }
+    },
+
+    "prototype/daily-cron": {
+      "enabled": true,
+      "paused": false,
+      "pauseReason": "",
+      "schedule": "0 9 * * *",
+      "description": "Daily data collection + GitHub Pages deploy (09:00 UTC / 18:00 KST)",
+      "repo": "mqzkim/prototype",
+      "workflowFile": ".github/workflows/daily-cron.yml",
+      "rules": {
+        "skipOnWeekend": false,
+        "skipDates": [],
+        "onlyOnDays": null,
+        "activeFrom": null,
+        "activeUntil": null
+      }
+    },
+
+    "prototype/structural-eval": {
+      "enabled": true,
+      "paused": false,
+      "pauseReason": "",
+      "schedule": "0 10 * * 1",
+      "description": "Weekly structural code evaluation (Monday 10:00 UTC / 19:00 KST)",
+      "repo": "mqzkim/prototype",
+      "workflowFile": ".github/workflows/structural-eval.yml",
+      "rules": {
+        "skipOnWeekend": false,
+        "skipDates": [],
+        "onlyOnDays": [1],
+        "activeFrom": null,
+        "activeUntil": null
+      }
+    }
+  }
+}
